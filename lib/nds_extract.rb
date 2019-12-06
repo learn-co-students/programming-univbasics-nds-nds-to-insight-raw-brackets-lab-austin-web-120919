@@ -3,30 +3,69 @@ require 'directors_database'
 require "pry"
 
 
+
+# Thought process:  Goal- return Hash with name and gross movies value total.
+#
+# 1) Access loop for director names and reference inside of hash:
+# director_totals = {director_name => container}
+# at the end of the method.
+#
+# 2) Start looping through movies, grab all values for worldwide_gross on each movie
+# inside each director_name. Add them to a container to hold until all have been called
+# and add the final total along with its associated value inside of the newly established hash
+# director_totals = {director_name => container}
+#
+# 3)Access the next directors name via the ((while row_index < directors_database.length do))
+# loop and repeat the process til the end. Since the loops will grab new directors
+# names and values, when called upon to go into director_totals = {director_name => container},
+# the new pair will be created each time.
+#
+# ------  I think I have all of the pieces but cant quite get there. -------
+
+
+
 def directors_totals(nds)
   # Remember, it's always OK to pretty print what you get *in* to make sure
   # that you know what you're starting with!
 
-  dir_tot_hash = {}
-  director_name = directors_database[0][:name]
-  movie_info_hash = directors_database[0][:movies]
-  ww_gross = movie_info_hash[0][:worldwide_gross]
-  dir_index = 0
 
+  row_index = 0
+  # container = 0
+director_totals = {}
+  # director_totals = {director_name => container}
 
-      while dir_index < directors_database.length do
-        dir_tot_hash[director_name] = 0
-        element_index = 0
-        while element_index < movie_info_hash.length do
-          dir_tot_hash[director_name] += ww_gross
-        end
-        dir_index += 1
+      # binding.pry
+        #9 directors
+    while row_index < directors_database.length do
+      director_name = directors_database[row_index][:name]
+      # binding.pry
+        container = 0
+
+      element_index = 0
+    # directors_database[row_index][:movies][element_index][:worldwide_gross]
+      # binding.pry
+      #                                    movie list length (6)
+      while element_index < directors_database[row_index][:movies].length do
+        # break if element_index == 2
+        container += directors_database[row_index][:movies][element_index][:worldwide_gross]
+      # binding.pry
+      element_index += 1
+      # binding.pry
       end
-binding.pry
+      # binding.pry
+      director_totals[director_name] = container
+      #binding.pry
+        row_index += 1
+        # binding.pry
+
+    end
+    # binding.pry
+
   #
   # The Hash result be full of things like "Jean-Pierre Jeunet" => "222312123123"
   # result = {
   # }
+
   #
   # Use loops, variables and the accessing method, [], to loop through the NDS
   # and total up all the
@@ -35,11 +74,12 @@ binding.pry
   # ...
   #
   #
-  # Be sure to return the result at the end!
-  #dir_tot_hash
-  dir_tot_hash
+ # Be sure to return the result at the end!
+ director_totals
+ # binding.pry
 end
 
+# binding.pry
 
 #=============================================================================
 
@@ -74,20 +114,6 @@ end
 
 
 
-# create a Hash ==== done
-
-# work through the directors database
-
-# Grab Director name :name ==== done
-# ==================director name var = directors_database[0][:name]
-
-# Dump into new hash
-# and :worldwide_gross from each movie
-# Add all
-# Dump into hash with associated director name
-# records the director's name as a key,
-# and the total grosses of all of their movies as the value
-
 
 # def print_first_directors_movie_titles
 # movie_list = directors_database[0][:movies]
@@ -96,12 +122,15 @@ end
 #     puts movie_list[row_index][:title]
 #       row_index += 1
 #
-#     end
-# SyntaxError:
-#   /home/beautiful-utility-7722/programming-univbasics-nds-nds-to-insight-raw-brackets-lab-austin-web-120919/lib/
-#   nds_extract.rb:18: syntax error, unexpected end
-#         end
-#         ^~~
-#   /home/beautiful-utility-7722/programming-univbasics-nds-nds-to-insight-raw-brackets-lab-austin-web-120919/lib/
-#   nds_extract.rb:100: syntax error, unexpected end-of-input
-# , expecting end
+
+# Expecting these totals
+# "Stephen Spielberg"=>1357566430,
+# "Russo Brothers"=>2281002470,
+# "James Cameron"=>2571020373,
+# "Spike Lee"=>256624217,
+# "Wachowski Siblings"=>806180282,
+# "Robert Zemeckis"=>1273838385,
+# "Quentin Tarantino"=>662738268,
+# "Martin Scorsese"=>636812242,
+# "Francis Ford Coppola"=>509719258
+# }
